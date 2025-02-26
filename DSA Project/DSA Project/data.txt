@@ -1,0 +1,6 @@
+Name: abdullah naeem
+Age: 18
+Id: 44722
+Cell: 03135220435
+Address: iaquat colony
+--------------------

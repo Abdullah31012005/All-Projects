@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LL(1) Parser</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #edc65a;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 600px;
+      margin: 30px auto;
+      background:rgb(231, 203, 151);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      font-size: 16px;
+      color: #333;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    textarea {
+      width: 90%;
+      height: 120px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      resize: none;
+    }
+
+    .button {
+      background-color: #7affb6;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto 20px;
+      width: 90%;
+    }
+
+    .button:hover {
+      background-color: #539a6a;
+    }
+
+    #output {
+      margin-top: 20px;
+    }
+
+    .output-section {
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fafafa;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .output-section h2 {
+      margin: 0 0 10px;
+      color: #333;
+      font-size: 18px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+    }
+
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    table th {
+      background:#7affb6;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    table tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    h2{
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-size: medium;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>LL(1) Parser</h1>
+    <center><label for="grammar">Enter Grammar</label></center>
+    <center><textarea id="grammar" ></textarea></center>
+    <button class="button" onclick="generateParser()">Parse</button>
+    
+    <div id="output">
+      <div class="grid">
+        <div class="output-section">
+          <h2>First Set</h2>
+          <table id="firstSetTable"></table>
+        </div>
+
+        <div class="output-section">
+          <h2>Follow Set</h2>
+          <table id="followSetTable"></table>
+        </div>
+
+        <div class="output-section">
+          <h2>Parsing Table</h2>
+          <table id="parsingTable"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function generateParser() {
+  const grammarInput = document.getElementById("grammar").value.trim();
+  if (!grammarInput) {
+    alert("Please enter a grammar.");
+    return;
+  }
+
+  try {
+    
+    const rules = parseGrammar(grammarInput);
+
+   
+    const firstSet = calculateFirstSet(rules);
+    const followSet = calculateFollowSet(rules, firstSet);
+
+    console.log("First",firstSet);
+    console.log("follow",followSet);
+    
+    
+    const parsingTable = createParsingTable(rules, firstSet, followSet);
+    console.log(parsingTable);
+    
+
+    
+    displayResults(firstSet, followSet, parsingTable);
+  } catch (error) {
+    alert(`An error occurred: ${error.message}`);
+    console.error(error);
+  }
+}
+
+function parseGrammar(grammar) {
+  const rules = {};
+  const lines = grammar.split("\n").map((line) => line.trim());
+
+  lines.forEach((line, index) => {
+    if (!line.includes("->")) {
+      throw new Error(`Syntax error in grammar at line ${index + 1}: Missing '->'.`);
+    }
+
+    const [nonTerminal, productions] = line.split("->").map((s) => s.trim());
+    if (!nonTerminal || !productions) {
+      throw new Error(`Invalid rule at line ${index + 1}: Non-terminal or productions missing.`);
+    }
+
+    const prodArray = productions.split("|").map((prod) => prod.trim().split(/\s+/));
+    rules[nonTerminal] = prodArray;
+  });
+
+  return rules;
+}
+
+function calculateFirstSet(rules) {
+  const first = {};
+  for (const nonTerminal in rules) {
+    first[nonTerminal] = new Set();
+  }
+
+  let updated;
+  do {
+    updated = false;
+
+    for (const nonTerminal in rules) {
+      for (const production of rules[nonTerminal]) {
+        let i = 0;
+        let hasEpsilon = true;
+
+        while (i < production.length && hasEpsilon) {
+          const symbol = production[i];
+
+          if (!rules[symbol]) { 
+            if (!first[nonTerminal].has(symbol)) {
+              first[nonTerminal].add(symbol);
+              updated = true;
+            }
+            hasEpsilon = false;
+          } else { 
+            const firstSymbol = first[symbol];
+            if (!firstSymbol) {
+              throw new Error(`FIRST set for '${symbol}' is undefined.`);
+            }
+            for (const item of firstSymbol) {
+              if (item !== "ε" && !first[nonTerminal].has(item)) {
+                first[nonTerminal].add(item);
+                updated = true;
+              }
+            }
+            hasEpsilon = firstSymbol.has("ε");
+          }
+          i++;
+        }
+
+        if (hasEpsilon && !first[nonTerminal].has("ε")) {
+          first[nonTerminal].add("ε");
+          updated = true;
+        }
+      }
+    }
+  } while (updated);
+
+  return first;
+}
+
+function calculateFollowSet(rules, firstSet) {
+  const follow = {};
+  for (const nonTerminal in rules) {
+    follow[nonTerminal] = new Set();
+  }
+
+  const startSymbol = Object.keys(rules)[0];
+  follow[startSymbol].add("$");
+
+  let updated;
+  do {
+    updated = false;
+
+    for (const nonTerminal in rules) {
+      for (const production of rules[nonTerminal]) {
+        for (let i = 0; i < production.length; i++) {
+          const symbol = production[i];
+
+          if (rules[symbol]) {
+            const rest = production.slice(i + 1);
+            let hasEpsilon = true;
+
+            for (const nextSymbol of rest) {
+              if (!rules[nextSymbol]) { 
+                if (!follow[symbol].has(nextSymbol)) {
+                  follow[symbol].add(nextSymbol);
+                  updated = true;
+                }
+                hasEpsilon = false;
+                break;
+              } else { 
+                const firstNext = firstSet[nextSymbol];
+                if (!firstNext) {
+                  throw new Error(`FIRST set for '${nextSymbol}' is undefined.`);
+                }
+                for (const item of firstNext) {
+                  if (item !== "ε" && !follow[symbol].has(item)) {
+                    follow[symbol].add(item);
+                    updated = true;
+                  }
+                }
+                hasEpsilon = firstNext.has("ε");
+                if (!hasEpsilon) break;
+              }
+            }
+
+            if (hasEpsilon) {
+              for (const item of follow[nonTerminal]) {
+                if (!follow[symbol].has(item)) {
+                  follow[symbol].add(item);
+                  updated = true;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  } while (updated);
+
+  return follow;
+}
+
+function createParsingTable(rules, firstSet, followSet) {
+  const table = {};
+
+  for (const nonTerminal in rules) {
+    table[nonTerminal] = {};
+  }
+
+  for (const nonTerminal in rules) {
+    for (const production of rules[nonTerminal]) {
+      const first = new Set();
+      let hasEpsilon = true;
+
+      for (const symbol of production) {
+        if (!rules[symbol]) { 
+          first.add(symbol);
+          hasEpsilon = false;
+          break;
+        } else { 
+          const firstSymbol = firstSet[symbol];
+          for (const item of firstSymbol) {
+            if (item !== "ε") {
+              first.add(item);
+            }
+          }
+          if (!firstSymbol.has("ε")) {
+            hasEpsilon = false;
+            break;
+          }
+        }
+      }
+
+      if (hasEpsilon) {
+        for (const item of followSet[nonTerminal]) {
+          first.add(item);
+        }
+      }
+
+      for (const terminal of first) {
+        if (table[nonTerminal][terminal]) {
+          throw new Error(`Conflict in parsing table at ${nonTerminal}, ${terminal}.`);
+        }
+        table[nonTerminal][terminal] = production.join(" ");
+      }
+    }
+  }
+
+  return table;
+}
+
+function displayResults(firstSet, followSet, parsingTable) {
+  document.getElementById("output").style.display = "block";
+
+  
+  const firstTable = document.getElementById("firstSetTable");
+  firstTable.innerHTML = "<tr><th>Non-Terminal</th><th>FIRST Set</th></tr>";
+  for (const nonTerminal in firstSet) {
+    firstTable.innerHTML += `<tr><td>${nonTerminal}</td><td>${[...firstSet[nonTerminal]].join(", ")}</td></tr>`;
+  }
+
+  
+  const followTable = document.getElementById("followSetTable");
+  followTable.innerHTML = "<tr><th>Non-Terminal</th><th>FOLLOW Set</th></tr>";
+  for (const nonTerminal in followSet) {
+    followTable.innerHTML += `<tr><td>${nonTerminal}</td><td>${[...followSet[nonTerminal]].join(", ")}</td></tr>`;
+  }
+
+  
+  const parsingTableElement = document.getElementById("parsingTable");
+  parsingTableElement.innerHTML = "<tr><th>Non-Terminal</th><th>Terminal</th><th>Production</th></tr>";
+  for (const nonTerminal in parsingTable) {
+    for (const terminal in parsingTable[nonTerminal]) {
+      parsingTableElement.innerHTML += `<tr><td>${nonTerminal}</td><td>${terminal}</td><td>${parsingTable[nonTerminal][terminal]}</td></tr>`;
+    }
+  }
+}
+
+  </script>
+</body>
+</html>

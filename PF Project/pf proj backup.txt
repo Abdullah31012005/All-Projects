@@ -1,0 +1,589 @@
+#include<iostream>
+#include<cctype>
+#include<string>
+using namespace std;
+int main()
+{
+	string player_name,rules;
+	int wrong=0,questions=0;
+	int score=0;
+	int sum1[4],sum2[4],sum3[4],sum4[4];
+	int sumr1=0,sumr2=0,sumr3=0,sumr4=0;
+	char r1a1,r1a2,r1a3,r1a4;
+	char r2a1,r2a2,r2a3,r2a4;
+	char r3a1,r3a2,r3a3,r3a4;
+	char r4a1,r4a2,r4a3,r4a4;
+	for(int i=0;i<35;i++)
+	{
+		cout<<"$";
+	}
+	cout<<" WHO WANTS TO BE A MILLIONAIRE ";
+	for(int i=0;i<35;i++)
+	{
+		cout<<"$";
+	}
+	cout<<endl;
+	cout<<"enter player name: ";
+	getline(cin,player_name);
+	cout<<endl;
+	string r1q1="In the UK, the abbreviation NHS stands for National what Service?";
+	string r1q2=" Which Disney character famously leaves a glass slipper behind at a royal ball?";
+	string r1q3="What name is given to the revolving belt machinery in an airport that delivers checked luggage from the plane to baggage reclaim?";
+	string r1q4="Which of these brands was chiefly associated with the manufacture of household locks?";
+	string r2q1="The hammer and sickle is one of the most recognisable symbols of which political ideology?";
+	string r2q2=" Which toys have been marketed with the phrase “robots in disguise”?";
+	string r2q3=" What does the word loquacious mean?";
+	string r2q4="Obstetrics is a branch of medicine particularly concerned with what?";
+	string r3q1="In Doctor Who, what was the signature look of the fourth Doctor, as portrayed by Tom Baker?";
+	string r3q2=" Which of these religious observances lasts for the shortest period of time during the calendar year?";
+	string r3q3=" At the closest point, which island group is only 50 miles south-east of the coast of Florida?";
+	string r3q4="Construction of which of these famous landmarks was completed first?";
+	string r4q1="Which of these cetaceans is classified as a “toothed whale”?";
+	string r4q2="Who is the only British politician to have held all four “Great Offices of State” at some point during their career?";
+	string r4q3="n 1718, which pirate died in battle off the coast of what is now North Carolina?";
+	string r4q4="Who was the winner of 'Who Wants to be a millionaire' in the year 2000";
+	do{
+	cout<<"This game has some rules and you have to follow them!"<<endl;
+	cout<<"1. There are only 4 rounds!"<<endl;
+	cout<<"2. There will be only 4 Question in each round"<<endl;
+	cout<<"3. If you answer more than 1 questions wrong in each round you will be disqualified"<<endl;
+	cout<<"enter yes if you agree to the rules: ";
+	getline(cin,rules);
+	if(rules=="yes")
+	{
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<"ROUND-1";
+		for(int k=0;k<35;k++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"question 1";
+		cout<<r1q1<<endl;
+		cout<<"\t\t\t\tThis Question is worth 25000$"<<endl;
+		cout<<"A. Humanity";
+		cout<<"\t\t\t\tB. Health"<<endl;
+		cout<<"C. Honour";
+		cout<<"\t\t\t\tD. Household"<<endl;
+		cin>>r1a1;
+		if(tolower(r1a1=='b'))
+		{
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum1[0]+=25000;
+		}
+		else
+		{
+			cout<<"your answer was wrong "<<player_name;
+				wrong++;
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 2";
+		cout<<r1q2<<endl;
+		cout<<"A. Pocahontas";
+		cout<<"\t\t\t\tB. Sleeping Beauty"<<endl;
+		cout<<"C. Cindrella";
+		cout<<"\t\t\t\tD. Elsa"<<endl;
+		cin>>r1a2;
+		if(tolower(r1a2)=='c')
+		{
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum1[1]+=25000;
+		}
+		else
+		{
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+			exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 3";
+		cout<<r1q3<<endl;
+		cout<<"A. Hangar";
+		cout<<"\t\t\t\tB. Terminal"<<endl;
+		cout<<"C. Concourse";
+		cout<<"\t\t\t\tD. Carousel"<<endl;
+		cin>>r1a3;
+		if(tolower(r1a3)=='d')
+		{
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum1[2]+=25000;
+		}
+		else
+		{
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+			exit(0);
+		}
+		 cout<<endl;
+		 for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		 cout<<endl;
+		 cout<<"Question 4 ";
+		 cout<<r1q4<<endl;
+		 cout<<"A. Phillips";
+		cout<<"\t\t\t\tB. Flymo"<<endl;
+		cout<<"C. Chubb";
+		cout<<"\t\t\t\tD. Ronseal"<<endl;
+		cin>>r1a4;
+		if(tolower(r1a4)=='c')
+		{
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum1[3]+=25000;
+		}
+		else
+		{
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+		     exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		for(int i=0;i<4;i++)
+		{
+			sumr1+=sum1[i];
+		}
+		cout<<"congratulations you earned "<<sumr1<<" $ in this round"<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<"ROUND-2";
+		for(int k=0;k<35;k++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 1";
+		cout<<r2q1<<endl;
+		cout<<"A. Republicanism";
+		cout<<"\t\t\tB. Communism"<<endl;
+		cout<<"C. Conservatism";
+		cout<<"\t\t\t\tD. Liberalism"<<endl;
+		cin>>r2a1;
+		if(tolower(r2a1)=='b')
+		{
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum2[0]=50000;
+		}
+		else
+		{
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+			exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 2 ";
+		cout<<r2q2<<endl;
+		cout<<"A. Bratz Dolls";
+		cout<<"\t\t\t\tB. Sylvanian Families"<<endl;
+		cout<<"C. Hatchimals";
+		cout<<"\t\t\t\tD. Transformers"<<endl;
+		cin>>r2a2;
+		if(tolower(r2a2)=='d')
+		{
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum2[1]+=50000;
+		}
+		else
+		{
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+		    exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 3 ";
+		cout<<r2q3<<endl;
+		cout<<"A. Angry";
+		cout<<"\t\t\t\tB. Chatty"<<endl;
+		cout<<"C. Beautiful";
+		cout<<"\t\t\t\tD. Shy"<<endl;
+		cin>>r2a3;
+		if(tolower(r2a3)=='b')
+		{
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum2[2]+=50000;
+		}
+		else
+		{
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+			exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 4 ";
+		cout<<r2q4<<endl;
+		cout<<"A. Child Birth";
+		cout<<"\t\t\t\tB. Broken Bones"<<endl;
+		cout<<"C. Heart Condition ";
+		cout<<"\t\t\tD. Old Age"<<endl;
+		cin>>r2a4;
+		if(tolower(r2a4)=='a')
+		{
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum2[3]+=50000;
+		}
+		else
+		{
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+			exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		for(int i=0;i<4;i++)
+		{
+			sumr2+=sum2[i];
+		}
+		cout<<"congratulations you earned "<<sumr2<<" $ in this round"<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<"ROUND-3"; 
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 1 ";
+		cout<<r3q1<<endl;
+		cout<<"A. Bow-tie, braces and tweed jacket";
+		cout<<"\t\t\tB. Wide-brimmed hat and extra long scarf"<<endl;
+		cout<<"C. Pinstripe suit and trainers ";
+		cout<<"\t\t\t\tD. Cape, velvet jacket and frilly shirt"<<endl;
+		cin>>r3a1;
+		switch(tolower(r3a1))
+		{
+		case 'b':
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum3[0]+=100000;
+			break;
+		default:
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+			exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 2 ";
+		cout<<r3q2<<endl;
+		cout<<"A. Ramadan";
+		cout<<"\t\t\t\tB. Diwali"<<endl;
+		cout<<"C. Lent ";
+		cout<<"\t\t\t\tD. Hanukkah"<<endl;
+		cin>>r3a2;
+		switch(tolower(r3a2))
+		{
+		case 'b':
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum3[1]+=100000;
+			break;
+		default:
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+			exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 3 ";
+		cout<<r3q3<<endl;
+		cout<<"A. Bahamas";
+		cout<<"\t\t\t\tB. US Virgin Islands"<<endl;
+		cout<<"C. Turks and Caicos Island";
+		cout<<"\t\tD. Bermuda"<<endl;
+		cin>>r3a3;
+		switch(tolower(r3a3))
+		{
+		case 'a':
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum3[2]+=100000;
+			break;
+		default:
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+			exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 4 ";
+		cout<<r3q4<<endl;
+		cout<<"A. Empire State Building";
+		cout<<"\t\tB. Royal Albert Hall"<<endl;
+		cout<<"C. Eiffel Tower";
+		cout<<"\t\t\t\tD. Big Ben Clock Tower"<<endl;
+		cin>>r3a4;
+		switch(tolower(r3a4))
+		{
+		case 'd':
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum3[3]+=100000;
+			break;
+		default:
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+			exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		for(int i=0;i<4;i++)
+		{
+			sumr3+=sum3[i];
+		}
+		cout<<"congratulations you earned "<<sumr3<<" $ in this round"<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<"ROUND-4";
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 1 ";
+		cout<<r4q1<<endl;
+		cout<<"A. Gray Whale";
+		cout<<"\t\t\t\tB. Minke Whale"<<endl;
+		cout<<"C. Sperm Whale";
+		cout<<"\t\t\t\tD. Humpback Whale"<<endl;
+		cin>>r4a1;
+		switch(tolower(r4a1))
+		{
+		case 'c':
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum4[0]+=200000;
+			break;
+		default:
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+			exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 2 ";
+		cout<<r4q2<<endl;
+		cout<<"A. David Lloyd George";
+		cout<<"\t\t\t\tB. Harold Wilson"<<endl;
+		cout<<"C. James Callaghan";
+		cout<<"\t\t\t\tD. John Major"<<endl;
+		cin>>r4a2;
+		switch(tolower(r4a2))
+		{
+		case 'c':
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum4[1]+=200000;
+			break;
+		default:
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+			exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 3 ";
+		cout<<r4q3<<endl;
+		cout<<"A. Calico Jack";
+		cout<<"\t\t\t\tB. Blackbeard"<<endl;
+		cout<<"C. Bartholomew Roberts";
+		cout<<"\t\t\tD. Captain Kidd"<<endl;
+		cin>>r4a3;
+		switch(tolower(r4a3))
+		{
+		case 'b':
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum4[2]+=200000;
+			break;
+		default:
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+			exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		cout<<"Question 4 ";
+		cout<<r4q4<<endl;
+		cout<<"A. John Carpenter";
+		cout<<"\t\t\t\tB. Kevin Olmstead"<<endl;
+		cout<<"C. David Paterson";
+		cout<<"\t\t\t\tD. Donald Fear"<<endl;
+		cin>>r4a4;
+		switch(tolower(r4a4))
+		{
+		case 'c':
+			cout<<"Correct Answer "<<player_name;
+			questions++;
+			sum4[3]+=200000;
+			break;
+		default:
+			cout<<"your answer was wrong "<<player_name;
+			wrong++;
+		}
+		if(wrong>1)
+		{
+			cout<<"sorry you cannot continue "<<endl;
+			exit(0);
+		}
+		cout<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		for(int i=0;i<4;i++)
+		{
+			sumr4+=sum4[i];
+		}
+		cout<<"congratulations you earned "<<sumr4<<" $ in this round"<<endl;
+		for(int i=0;i<35;i++)
+		{
+			cout<<"-";
+		}
+		cout<<endl;
+		score=score+sumr1+sumr2+sumr3+sumr4;
+		cout<<"Dear "<<player_name<<" you have answered "<<questions<<" questions right"<<endl;
+		cout<<"Congratulations on winning prize of "<<score<<"$"<<endl;
+	}
+	else
+	{
+		cout<<"sorry you cannot play this game if you do not agree to the rules"<<endl;
+	}
+	}while(rules=="no");
+	return 0;
+}
